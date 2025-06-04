@@ -1,0 +1,99 @@
+---
+title: "Assessing the Impact of a Neighborhood-Based Wellness Center on Public Health Outcomes: A Garfield Park, Chicago case study"
+subtitle: "Part 1. Health center catchment area analysis"
+author: Elizabeth Lynch, PhD; C. Scott Smith, PhD AICP
+email: Elizabeth_Lynch@rush.edu; c.scott.smith@depaul.edu
+format: 
+  html:
+    warning: false
+    error: false
+    code-tools: true
+    code-fold: false
+    eval: false
+    echo: true
+    theme: flatly
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    reference-location: document
+    fontsize: 0.9em
+    interlinespace: -0.75em
+    embed-resources: true
+    number-sections: true
+    number-depth: 1
+execute:
+  echo: true
+runtime: shiny
+date: 2025-4-15
+#bibliography: ../references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| eval: true
+#| echo: false
+
+library(censusapi) # retrieving census attribute data
+library(tigris) # retrieving census geometries
+library(sf) # manipulating geometry data
+library(dplyr) # data wrangling, pip format
+library(tidyverse) # data wrangling
+library(tidycensus) # download census data
+library(RColorBrewer) # color palettes
+library(DT)
+library(data.table)
+library(ggplot2)
+library(leaflet)
+library(leaflet.extras)
+
+options(scipen=999, digits = 2) # format output for data tables
+
+load("data/wellness_center_assets.RData")
+```
+
+# Background
+This document provides essential resources to support the development of a research design for evaluating the impact of a neighborhood-based wellness center on public health outcomes. The proposed center will be located at 4305 W Madison Street in the Garfield Park neighborhood of Chicago.
+
+A key early step in the research is identifying the catchment area from which residents will be selected to participate in the evaluation. To guide this process, the document presents relevant sociodemographic and transportation data for potential service areas. These data are offered in both table and map formats to support a clear geographic and contextual understanding of the households that may be affected by the wellness center.
+
+# Methodology 
+The service area for the planned wellness center is expected to vary based on several factors, including age, health status, the quality of the walking environment, weather conditions, transportation options, and cultural or regional norms. Urban planning and public health research provide general benchmarks for estimating service areas, with particular emphasis on walkability and pedestrian access.
+
+Research shows that acceptable walking distances differ depending on individual characteristics and trip purpose. Urban planners commonly use a 10-minute walk radius—approximately 0.5 miles—as a standard service area for community amenities like wellness centers. An empirical study by Merlin et al. found that the average walking distance in the United States is about 0.33 miles, or an 8-minute walk. Most people are generally comfortable walking up to 10 minutes for routine errands or appointments, especially when the route is safe and pleasant. Individuals visiting a wellness center for health-related reasons may be more motivated and willing to walk longer distances, typically between 10 and 15 minutes, or roughly 0.5 to 0.75 miles.
+
+Access to the center can also be significantly expanded through public transportation, which allows individuals to reach the facility from farther distances within a similar travel time and at low cost. In recognition of this variability, the following analysis examines the characteristics of multiple potential catchment areas: residents living within a ¼-mile radius of the wellness center; residents within a 15-minute walking distance; and those within 15-, 20-, 25-, and 30-minute walk and/or transit trips to the center.
+
+# Wellness Center Map
+A sociodemographic summary of the population is provided by census tract using 2022 American Community Survey data from the U.S. Census Bureau, as shown in @fig-wellness_map. This map enables users to visualize the wellness center’s catchment areas, along with the distribution of public bus stops and rail stations. It also displays levels of social vulnerability by census tract, based on the CDC’s Social Vulnerability Index (SVI) framework.
+
+Developed by the [Centers for Disease Control and Prevention, the SVI](https://www.atsdr.cdc.gov/placeandhealth/svi/index.html) uses US Census data to assess 15 social factors grouped into four key themes: socioeconomic status; household composition and disability; minority status and language; and housing type and transportation. On this map, each census tract is assigned a score ranging from 0 (least vulnerable) to 1 (most vulnerable), indicating its relative level of social vulnerability within Cook County. The index was created using ACS 5-year estimates between 2018-2022.
+
+```{r}
+#| label: fig-wellness_map
+#| eval: true
+#| echo: false
+#| fig-cap: Wellness Center Map and Modeled Service Catchments
+
+wellness_center_map
+```
+
+# Summary of Service Catchment Areas
+A summary of the population and housing characteristics are summarized by catchment area in @fig-catchment_table below. The 1/4-mile service area, representing the most immediate catchment, covers a small area of approximately 0.2 square miles and includes 10 bus stops with no CTA stations. It serves a population of 2,899 across 920 households and 1,159 housing units. The community is predominantly non-White (98.7%) and experiences high levels of poverty (54.1%) and housing burden (62.8%). Nearly 29% of the population is under 18, while 12.3% are 65 or older. Disability prevalence is also notable at 22.5%, indicating potentially higher needs for accessible services and infrastructure.
+
+As the catchment area expands with longer walk and transit travel times, population density increases while indicators of social vulnerability gradually decrease. The 15-minute area spans 0.77 square miles, serving 10,460 people, while the 30-minute zone covers nearly 7 square miles and includes 90,714 residents. In each successive zone, the share of non-White residents remains very high (above 94%), though poverty rates, overcrowding, and housing burden slightly decline. For example, in the 30-minute area, the poverty rate drops to 46.2%, and housing burden falls to 51.5%. Youth and senior population proportions remain relatively stable across all areas, while the prevalence of disability decreases from 22.3% in the 15-minute zone to 16.5% in the 30-minute area.
+
+```{r}
+#| label: fig-catchment_table
+#| eval: true
+#| echo: false
+#| fig-cap: Characteristics of Service Catchment Areas
+
+iso_summary_datatable
+```
+
+# Recruitment Screening Application
+
+The following is a screening application for determining whether potential research participants reside inside either the wellness center or Englewood area boundaries. 
+
+<iframe src="https://justenvirons-wellness-center.share.connect.posit.cloud/" width="100%" height="600px" frameborder="0"></iframe>
